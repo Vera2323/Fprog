@@ -1,0 +1,12 @@
+data Tree a = Empty | Branch a (Tree a) (Tree a)
+    deriving Show
+
+predsym :: Tree a -> Tree b -> Bool
+predsym Empty            Empty            = True
+predsym Empty            (Branch _ _ _)   = False
+predsym (Branch _ _ _)   Empty            = False
+predsym (Branch _ l1 r1) (Branch _ l2 r2) = predsym l1 l2 && predsym r1 r2
+
+symmetric :: Tree a -> Bool
+symmetric Empty          = True
+symmetric (Branch _ l r) = predsym l r
